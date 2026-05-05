@@ -8,8 +8,7 @@ on:
 
 jobs:
   build:
-    # МЕНЯЕМ ubuntu-latest на windows-latest
-    runs-on: windows-latest 
+    runs-on: windows-latest
 
     steps:
     - uses: actions/checkout@v4
@@ -23,8 +22,9 @@ jobs:
     - name: Restore NuGet packages
       run: nuget restore CalculatorApp.sln
 
-    - name: Build
+    - name: Build Solution
       run: msbuild CalculatorApp.sln /p:Configuration=Release
 
-    - name: Test
-      run: dotnet test --no-build --verbosity normal
+    - name: Run Tests
+      # Эта команда найдет тесты, даже если они в другой версии .NET
+      run: dotnet test --configuration Release --no-build
